@@ -485,15 +485,7 @@ Electroencephalogram (EEG), stochastic model, scale mixture model, epileptic sei
 % Here we have the typical use of a "T" for an initial drop letter
 % and "HIS" in caps to complete the first word.
 \IEEEPARstart{E}{pilepsy} is a neurological disorder that causes epileptic seizures due to abnormalities in cranial nerves, and it is reported that there are around 50 million patients worldwide\cite{WHO}．てんかん発作を放置することは脳障害の増大に繋がる可能性があることから，発作の早期発見が重要である．しかしながら，てんかん発作の診断には多くの専門知識や経験が求められるのに加え，てんかん発作は一度だけでなく反復して生じる場合がある~\cite{ep2011}．そのため，診断そのものにも長時間を要することから，専門医への負担が問題となっている．
-<<<<<<< HEAD
-aaaaa
-=======
-<<<<<<< HEAD
-こんにちは，大西亮太です．
-=======
 
->>>>>>> 5a12be3ab37b0a6582f6160803c38631bca57541
->>>>>>> e7d474ef954184727c6e350f46b6a47a724c9c32
 従来，医師の負担軽減のため，頭皮表面から計測可能な生体電気信号である脳波(electroencephalogram : EEG)を用いて，てんかん発作を検出する方法がさまざま提案されてきた~\cite{Deburchgraeve2008,Subasi2005,kellaway1979precise,Panzica1999,fusco1993ictal,Acir2005,Greene2008}．
 例えばDeburchgraeveらは，発作時における振幅の急峻な変化や高振幅の徐波の周期性に着目した脳波解析により，てんかん発作の検出を行なった\cite{Deburchgraeve2008}．また，Subasiらはウェーブレット変換を用いて周波数解析を行なうことで，発作の有無の識別を実現している~\cite{Subasi2005}．
 しかし，てんかん発作時の脳波には年齢やてんかんの種類に起因する大きな個人差が存在するため，振幅の大小や周波数の変化のみの評価では検出困難な場合があるという問題が存在した．
@@ -706,12 +698,14 @@ $\delta$ (1--3 Hz), $\theta$ (4--7 Hz), $\alpha$ (8--12 Hz), $\beta$ (13--24 Hz)
 
 %=====================
 \subsection{Experiment I (Estimate parameter) }
-提案モデルが脳波の確率的変動を捉えているかを検証するため，多変量t分布を用いて，疑似脳波をあるサンプル数だけ乱数生成し，推定値と実測値の誤差を確認するシミュレーション実験を行なった．
-解析には，多変量t分布の二つのパラメータ自由度$\nu$,尺度行列$\mathbf{\Psi}$を固定し，サンプル数を~~,--,||まで変更させた19次元のデータを用いることで，誤差が最小となるサンプル数を探索した．
-誤差の評価には，推定値と実測値の差の絶対値である絶対誤差を算出した．
-\begin{equation}%ディスプレイ用番号付き12
-		\mathrm{Absolute\;error} = |\mathrm{(estimated\;value)}-\mathrm{(true\;value)}|
-\end{equation}
+提案モデルが脳波の確率的変動を捉えているかを検証するため，多変量t分布を用いて，疑似脳波をあるサンプル数だけ乱数生成し，推定値と実測値の誤差を確認するシミュレーション実験を行なった．精度は真値$\nu$, $\mathbf{\Psi}$と推定値$\hat{\nu}$, $\hat{\mathbf{\Psi}}$を比較することで示す．精度の評価指標には，百分率誤差の平均を算出した．
+\begin{eqnarray}%ディスプレイ用番号付き12
+	\mathrm{Percentage\;error} = \begin{cases}
+    \displaystyle  \frac{|\nu-\hat{\nu}|}{|\nu|}\times100 & (L=1)\\
+    \displaystyle \frac{\|\mathbf{\Psi}-\hat{\mathbf{\Psi}}\|}{\|\mathbf{\Psi}\|}\times100 & (L>1)
+\end{cases}
+\end{eqnarray}
+各パラメータの推定は，サンプル数$N$を$N$ = \{500, 1000, 500, 5000, 10000, 15000, 25000, 5000\}と変更させて行なった．百分率誤差の平均は多変量t分布の二つのパラメータ自由度$\nu$と尺度行列$\mathbf{\Psi}$ (対角成分のみ変更)の真値を400回変更することで求めた ($\nu=0.5,1.0,1.5,\cdots,10.0, \psi_{ii} =0.05, 0.10, 0.15,\cdots, 1.00$).
 
 \subsection{Experiment II (Epileptic EEG analysis)}
 提案法に基づく脳波の確率的変動評価の有効性を検証するため，てんかん発作時の脳波に対して解析を行なった．
