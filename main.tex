@@ -548,7 +548,7 @@ $\mathbf{\Sigma}$の分布には，多変量ガウス分布の共役事前分布
 &\quad \times&\frac{1}{(2\pi)^{D/2} |\mathbf{\Sigma}|^{1/2}} \mathrm{exp} \left[-\frac{1}{2}\mathbf{x}^\mathrm{T} {\bm \Sigma}^{-1} \mathbf{x}\right] \mathrm{d}{\bm \Sigma} \nonumber \\
 		&=& \frac{|{\bm \Psi}|^{\frac{\nu}{2}}}{2^{\frac{\nu D}{2}} (2\pi)^\frac{D}{2} \Gamma_D \left(\frac{\nu}{2}\right)} \int |\mathbf{\Sigma}|^{-\frac{\nu+D+2}{2}}\nonumber\\
 &\quad \times&\mathrm{exp} \left[-\frac{1}{2}\mathrm{tr}\{(\bm \Psi + \mathbf{x} \mathbf{x}^\mathrm{T})\bm \Sigma^{-1}\}\right] \mathrm{d}{\bm \Sigma} \nonumber \\
-		%&=& \frac{\Gamma_L(\frac{\nu+1}{2})}{\Gamma_L(\frac{\nu-L+1}{2})} \frac{|\frac{1}{\nu-L+1} {\bm \Psi}|^{-\frac{1}{2}}}{\left[\pi(\nu-L+1)\right]^{\frac{L}{2}}} (1+\Delta)^{-\frac{\nu+1}{2}},
+		%&=& \frac{\Gamma_D(\frac{\nu+1}{2})}{\Gamma_D(\frac{\nu-D+1}{2})} \frac{|\frac{1}{\nu-D+1} {\bm \Psi}|^{-\frac{1}{2}}}{\left[\pi(\nu-D+1)\right]^{\frac{D}{2}}} (1+\Delta)^{-\frac{\nu+1}{2}},
 \label{eq:p_x}
 &=& \frac{\Gamma(\frac{\nu+1}{2})}{\Gamma(\frac{\nu-D+1}{2})} \frac{|\frac{1}{\nu-D+1} {\bm \Psi}|^{-\frac{1}{2}}}{\left[\pi(\nu-D+1) \right]^{\frac{D}{2}}} (1+\Delta)^{-\frac{\nu+1}{2}} ,%eq4
 \end{eqnarray}
@@ -702,11 +702,11 @@ $\delta$ (1--3 Hz), $\theta$ (4--7 Hz), $\alpha$ (8--12 Hz), $\beta$ (13--24 Hz)
 提案モデルが脳波の確率的変動を捉えているかを検証するため，逆ウィシャート分布から乱数で共分散行列を生成し，その共分散行列に従うガウス分布を1秒ごとに乱数生成することで，疑似脳波とみなし，推定値と実測値の誤差を確認するシミュレーション実験を行なった．精度は真値$\nu$, $\mathbf{\Psi}$と推定値$\hat{\nu}$, $\hat{\mathbf{\Psi}}$を比較することで示す．精度の評価指標には，百分率誤差の平均を算出した．
 \begin{eqnarray}%ディスプレイ用番号付き12
 	\mathrm{Percentage\;error} = \begin{cases}
-    \displaystyle  \frac{|\nu-\hat{\nu}|}{|\nu|}\times100 & (L=1)\\
-    \displaystyle \frac{\|\mathbf{\Psi}-\hat{\mathbf{\Psi}}\|_F}{\|\mathbf{\Psi}\|_F}\times100 & (L>1)
+    \displaystyle  \frac{|\nu-\hat{\nu}|}{|\nu|}\times100 & (D=1)\\
+    \displaystyle \frac{\|\mathbf{\Psi}-\hat{\mathbf{\Psi}}\|_F}{\|\mathbf{\Psi}\|_F}\times100 & (D>1)
 \end{cases}
 \end{eqnarray}
-ここで，$\|A\|_F=\sqrt{\sum_{i=1}^L \sum_{j=1}^L {|a_{ij}}|^2}$（フロベニウスノルム~引用）である．
+ここで，$\|A\|_F=\sqrt{\sum_{i=1}^D \sum_{j=1}^D {|a_{ij}}|^2}$（フロベニウスノルム~引用）である．
 
 各パラメータの推定は，サンプリング周波数を$f_s=500$ Hzと設定し，窓幅$W$を$W$ = \{1, 2, 5, 10, 15, 20, 30, 50, 100 s\}，次元数$D$を$D$ = \{1, 2, 4, 8, 16, 19\}と変更させて行なった．百分率誤差の平均は多変量t分布の二つのパラメータ自由度$\nu'$と尺度行列$\mathbf{\Psi}'$ (共分散成分は0.5とし，対角成分のみ変更)の真値を400回変更することで求めた ($\nu=0.5,1.0,1.5,\cdots,10.0, \psi_{ii} =1.0, 2.0, 3.0,\cdots, 20.0$).
 
