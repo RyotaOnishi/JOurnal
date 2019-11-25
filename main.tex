@@ -368,7 +368,7 @@
 %\title{Non-Gaussian Modeling of Surface EMG Signals Based on a Scale Mixture Model\\ with Variance Distribution}
 %\title{Non-Gaussian Surface EMG Signals Can be Described Based on a Scale Mixture Model\\ with Variance Distribution}
 %\title{Non-Gaussian Modeling of Surface EMG Signals Based on a Scale Mixture Model\\ and Analysis of Variance Distribution}
-\title{An Epileptic EEG Analysis Method Based on a Scale Mixture Model}
+\title{An EEG Analysis Method Based on a Multivariate Scale Mixture Model Applied to Epileptic Seizuire Detection}
 %
 %
 % author names and IEEE memberships
@@ -445,8 +445,9 @@
 % in the abstract or keywords.
 \begin{abstract}
 This paper proposes a surface electroencephalogram (EEG) analysis method based on a scale mixture model. The proposed method combines a scale mixture model with a filter bank, thereby allowing the time-series estimation of stochastic fluctuations latent in each frequency band of EEG. The analysis can be evaluated Gaussianity and non-Gaussianity by  one dimensional parameter.
-In the experiment, we describe proposed model validity to estimate parameter and fit to  recorded EEGs from twenty patients.
-It was also shown that estimated parameter evaluate the performance of epileptic seizures detection by using ROC analysis.
+In the experiment, we estimate parameters using artificially generated signals, and evaluate the estimated accuracy. we describe proposed model validity to estimate parameter and fit to  recorded EEGs from twenty patients.
+It was also shown that estimated parameters evaluate the performance of epileptic seizures detection by using ROC analysis.
+
 \end{abstract}
 
 % Note that keywords are not normally used for peerreview papers.
@@ -491,7 +492,7 @@ Electroencephalogram (EEG), stochastic model, scale mixture model, epileptic sei
 しかし，てんかん発作時の脳波には年齢やてんかんの種類に起因する大きな個人差が存在するため，振幅の大小や周波数の変化のみの評価では検出困難な場合があるという問題が存在した．
 
 一方，振幅や周波数に依存しない特徴として，脳波の確率分布形状に関する研究も従来から行なわれてきた~\cite{Sounders1963,Gonen2012,Campbell1967,Weiss1973,Nurujjaman2009,Charles1999}．
-古くは脳波を定常なガウス過程と仮定することが一般的であったが~\cite{Sounders1963,Gonen2012}，Campbellらによって脳波が非ガウスな性質を持つことが統計的に示されたことで~\cite{Campbell1967}，脳波のガウス性に着目した解析がさまざま行なわれるようになった~\cite{Gonen2012,Weiss1973,Nurujjaman2009,Charles1999}．
+古くは脳波を定常なガウス分布であると仮定することが一般的であったが~\cite{Sounders1963,Gonen2012}，Campbellらによって脳波が非ガウスな性質を持つことが統計的に示されたことで~\cite{Campbell1967}，脳波のガウス性に着目した解析がさまざま行なわれるようになった~\cite{Gonen2012,Weiss1973,Nurujjaman2009,Charles1999}．
 てんかん発作と脳波のガウス性との関係に関する従来研究は少ないものの，NurujjamanらやCharlesらによっててんかん発作時の脳波が非ガウスな分布に従うことが報告されている~\cite{Nurujjaman2009,Charles1999}．
 しかしながら，これらは実験的な報告に留まっており，脳波の非ガウス性を定量的に扱うための理論的な枠組みは存在しなかった．
 
@@ -507,7 +508,7 @@ Electroencephalogram (EEG), stochastic model, scale mixture model, epileptic sei
 
 \subsection{Scale Mixture Model of Surface EEG Signals}
 Fig. \ref{fig:model}に，尺度混合モデルの概略図を示す．
-本モデルにおいて，$L$極の電極から計測された脳波$\mathbf{x} \in \mathbb{R}^{L}$を平均ゼロ，分散共分散行列$\bm {\Sigma} \in \mathbb{R}^{L \times L}$の多変量ガウス分布によって表現する．ここで，$\bm {\Sigma}$もまた確率変数であり，自由度$\nu \in \mathbb{R}^+$ と尺度行列 ${\bm \Psi} \in \mathbb{R}^{L \times L}$によって特徴付けられる．本モデルにおいて，$\bm \Sigma$は直接観測されないため潜在変数として扱われる．
+本モデルにおいて，$D$極の電極から計測された脳波$\mathbf{x} \in \mathbb{R}^{D}$を平均ゼロ，分散共分散行列$\bm {\Sigma} \in \mathbb{R}^{D \times D}$の多変量ガウス分布によって表現する．ここで，$\bm {\Sigma}$もまた確率変数であり，自由度$\nu \in \mathbb{R}^+$ と尺度行列 ${\bm \Psi} \in \mathbb{R}^{D \times D}$によって特徴付けられる．本モデルにおいて，$\bm \Sigma$は直接観測されないため潜在変数として扱われる．
 %1Note that the frequency components of EMG signals are ignored in the model; only their variance is considered.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -528,7 +529,7 @@ The variance-covariance matrix distribution parameters are estimated via margina
 %
 \begin{eqnarray}
 	p(\mathbf{x}|{\bm \Sigma}) &=& {\mathcal N}(\mathbf{x}|{\bm \Sigma}) \nonumber\\
-&=& \frac{1}{(2\pi)^{L/2} |\mathbf{\Sigma}|^{1/2}} \mathrm{exp} \left[-\frac{1}{2}\mathbf{x}^\mathrm{T} {\bm \Sigma}^{-1} \mathbf{x}\right]. \label{eq:gauss_x}
+&=& \frac{1}{(2\pi)^{D/2} |\mathbf{\Sigma}|^{1/2}} \mathrm{exp} \left[-\frac{1}{2}\mathbf{x}^\mathrm{T} {\bm \Sigma}^{-1} \mathbf{x}\right]. \label{eq:gauss_x}
 \label{eq:p_x_sigma} %eq1
 \end{eqnarray}
 %
@@ -536,20 +537,20 @@ $\mathbf{\Sigma}$の分布には，多変量ガウス分布の共役事前分布
 %
 \begin{eqnarray}
 	p({\bm \Sigma}) &=& {\mathcal {IW}}({\bm \Sigma};\nu,{\bm \Psi}) \nonumber\\
-&=& \frac{|{\bm \Psi}|^{\frac{\nu}{2}}}{2^{\frac{\nu L}{2}} \Gamma_L \left(\frac{\nu}{2}\right)} |\bm \Sigma|^{-\frac{\nu+L+1}{2}} \mathrm{exp} \left[-\frac{\mathrm{tr}(\bm \Psi \bm \Sigma^{-1})}{2}\right],\label{eq:p_sigma} %eq2
+&=& \frac{|{\bm \Psi}|^{\frac{\nu}{2}}}{2^{\frac{\nu D}{2}} \Gamma_D \left(\frac{\nu}{2}\right)} |\bm \Sigma|^{-\frac{\nu+D+1}{2}} \mathrm{exp} \left[-\frac{\mathrm{tr}(\bm \Psi \bm \Sigma^{-1})}{2}\right],\label{eq:p_sigma} %eq2
 \end{eqnarray}
 %
 ここで，$\nu$と${\bm \Psi}$ は逆ウィシャート分布を決定するパラメータであり，$\nu$は分布のガウス性を決定する自由度，${\bm \Psi}$は尺度行列である．いま, $\mathbf{x}$の周辺分布$P(\mathbf{x})$を考えると，
 \begin{eqnarray}
 	p(\mathbf{x}) &=& \int p({\bm \Sigma})p(\mathbf{x}|{\bm \Sigma}) \mathrm{d}{\bm \Sigma} \nonumber \\
 		&=& \int {\mathcal {IW}}({\bm \Sigma}; \nu, {\bm \Psi}) {\mathcal N}(\mathbf{x}|{\bm \Sigma}) \mathrm{d}{\bm \Sigma} \label{eq:marginal_x} \\ %eq3
-		&=& \int \frac{|{\bm \Psi}|^{\frac{\nu}{2}}}{2^{\frac{\nu L}{2}} \Gamma_L \left(\frac{\nu}{2}\right)} |\mathbf{\Sigma}|^{-\frac{\nu+L+1}{2}}\mathrm{exp} \left[-\frac{\mathrm{tr}(\bm \Psi \bm \Sigma^{-1})}{2}\right] \nonumber\\
-&\quad \times&\frac{1}{(2\pi)^{L/2} |\mathbf{\Sigma}|^{1/2}} \mathrm{exp} \left[-\frac{1}{2}\mathbf{x}^\mathrm{T} {\bm \Sigma}^{-1} \mathbf{x}\right] \mathrm{d}{\bm \Sigma} \nonumber \\
-		&=& \frac{|{\bm \Psi}|^{\frac{\nu}{2}}}{2^{\frac{\nu L}{2}} (2\pi)^\frac{L}{2} \Gamma_L \left(\frac{\nu}{2}\right)} \int |\mathbf{\Sigma}|^{-\frac{\nu+L+2}{2}}\nonumber\\
+		&=& \int \frac{|{\bm \Psi}|^{\frac{\nu}{2}}}{2^{\frac{\nu D}{2}} \Gamma_D \left(\frac{\nu}{2}\right)} |\mathbf{\Sigma}|^{-\frac{\nu+D+1}{2}}\mathrm{exp} \left[-\frac{\mathrm{tr}(\bm \Psi \bm \Sigma^{-1})}{2}\right] \nonumber\\
+&\quad \times&\frac{1}{(2\pi)^{D/2} |\mathbf{\Sigma}|^{1/2}} \mathrm{exp} \left[-\frac{1}{2}\mathbf{x}^\mathrm{T} {\bm \Sigma}^{-1} \mathbf{x}\right] \mathrm{d}{\bm \Sigma} \nonumber \\
+		&=& \frac{|{\bm \Psi}|^{\frac{\nu}{2}}}{2^{\frac{\nu D}{2}} (2\pi)^\frac{D}{2} \Gamma_D \left(\frac{\nu}{2}\right)} \int |\mathbf{\Sigma}|^{-\frac{\nu+D+2}{2}}\nonumber\\
 &\quad \times&\mathrm{exp} \left[-\frac{1}{2}\mathrm{tr}\{(\bm \Psi + \mathbf{x} \mathbf{x}^\mathrm{T})\bm \Sigma^{-1}\}\right] \mathrm{d}{\bm \Sigma} \nonumber \\
 		%&=& \frac{\Gamma_L(\frac{\nu+1}{2})}{\Gamma_L(\frac{\nu-L+1}{2})} \frac{|\frac{1}{\nu-L+1} {\bm \Psi}|^{-\frac{1}{2}}}{\left[\pi(\nu-L+1)\right]^{\frac{L}{2}}} (1+\Delta)^{-\frac{\nu+1}{2}},
 \label{eq:p_x}
-&=& \frac{\Gamma(\frac{\nu+1}{2})}{\Gamma(\frac{\nu-L+1}{2})} \frac{|\frac{1}{\nu-L+1} {\bm \Psi}|^{-\frac{1}{2}}}{\left[\pi(\nu-L+1) \right]^{\frac{L}{2}}} (1+\Delta)^{-\frac{\nu+1}{2}} ,%eq4
+&=& \frac{\Gamma(\frac{\nu+1}{2})}{\Gamma(\frac{\nu-D+1}{2})} \frac{|\frac{1}{\nu-D+1} {\bm \Psi}|^{-\frac{1}{2}}}{\left[\pi(\nu-D+1) \right]^{\frac{D}{2}}} (1+\Delta)^{-\frac{\nu+1}{2}} ,%eq4
 \end{eqnarray}
 %
 となる．ただし，$\Delta$はマハラノビス距離の平方で，
@@ -565,17 +566,17 @@ $\mathbf{\Sigma}$の分布には，多変量ガウス分布の共役事前分布
 
 \subsection{Parameter Estimation Based on Marginal Maximum Likelihood}
 %%%%%%%%%%%%%%%19/05/06
-いま，$N$サンプルの脳波データ$\mathbf{X} = \{\mathbf{x}_n \in \mathbb{R}^{L}; n=1,2,\cdots,N \}$が観測されたとすると，分散共分散行列分布パラメータ$\nu$, $\bm \Psi$は，周辺分布の尤度$p(\mathbf{X}) = \prod_{n=1}^{N} p(\mathbf{x}_n)$を最大化することで推定できる．
+いま，$N$サンプルの脳波データ$\mathbf{X} = \{\mathbf{x}_n \in \mathbb{R}^{D}; n=1,2,\cdots,N \}$が観測されたとすると，分散共分散行列分布パラメータ$\nu$, $\bm \Psi$は，周辺分布の尤度$p(\mathbf{X}) = \prod_{n=1}^{N} p(\mathbf{x}_n)$を最大化することで推定できる．
 しかしながら，一般に周辺尤度の最尤解は複雑な形となるため，$p(\mathbf{X})$の直接最適化は困難である場合が多い~\cite{t2006}．
 そこで本論文では，潜在変数を含むモデルに対する効率的な最適化手法であるEM (expectation-maximization) アルゴリズム\cite{Models1998}に基づいて$\nu$, $\bm \Psi$の推定を行なう．
 %%%%%%%%%%%%%%%19/06/12
 
-まず，簡単のため(\ref{eq:p_x})式における分散共分散行列パラメータ$\nu$, $\bm \Psi$を$\nu= \nu' +L-1$, $\bm \Psi = \nu' \bm{\Psi}'$と置き換えると，周辺分布$p(\mathbf{x}_n)$は次のように書き換えることができる．
+まず，簡単のため(\ref{eq:p_x})式における分散共分散行列パラメータ$\nu$, $\bm \Psi$を$\nu= \nu' +D-1$, $\bm \Psi = \nu' \bm{\Psi}'$と置き換えると，周辺分布$p(\mathbf{x}_n)$は次のように書き換えることができる．
 \begin{align}%ディスプレイ用番号付き6,7
 \label{eq:eq6}
-p(\mathbf{x}_n) &=\int \mathcal{IW}(\bm{\Sigma}_n; \nu'+L-1, \nu' \bm{\Psi}') \mathcal{N}(\mathbf{x}_n|\bm{\Sigma}_n) \mathrm{d} {\bm{\Sigma}_n} \\
+p(\mathbf{x}_n) &=\int \mathcal{IW}(\bm{\Sigma}_n; \nu'+D-1, \nu' \bm{\Psi}') \mathcal{N}(\mathbf{x}_n|\bm{\Sigma}_n) \mathrm{d} {\bm{\Sigma}_n} \\
 \label{eq:eq7}
-&=\frac{\Gamma(\frac{\nu'+L}{2})}{\Gamma(\frac{\nu'}{2})} \frac{|{\bm \Psi'}|^{-\frac{1}{2}}}{\left(\pi \nu' \right)^{\frac{L}{2}}} \left(1+\frac{\Delta '}{\nu '} \right)^{-\frac{\nu'+L}{2}}
+&=\frac{\Gamma(\frac{\nu'+D}{2})}{\Gamma(\frac{\nu'}{2})} \frac{|{\bm \Psi'}|^{-\frac{1}{2}}}{\left(\pi \nu' \right)^{\frac{D}{2}}} \left(1+\frac{\Delta '}{\nu '} \right)^{-\frac{\nu'+D}{2}}
 \end{align}
 ただし，
 \begin{eqnarray}
@@ -596,16 +597,16 @@ p(\mathbf{x}_n) &=\int \mathcal{IW}(\bm{\Sigma}_n; \nu'+L-1, \nu' \bm{\Psi}') \m
 \item[(ii)] Eステップ：完全データ対数尤度$Q(\nu',\bm \Psi')$を計算する．
 \begin{align}%ディスプレイ用番号付き10,11
   Q(\nu',\bm{\Psi}')&=\mathbb{E} \left[\ln{\prod_{n=1}^{N}\mathrm{IG}(\tau_n;\nu'/2,\nu'/2) \mathcal{N}(\mathbf{x}_n|\tau_n \bm{\Psi}')}\right]  \notag  \\
-  &=\sum_{n=1}^{N} \biggl[-\frac{L}{2}\ln{(2\pi)}-\frac{L}{2}\mathbb{E}\left[\ln{\tau_n}\right]-\frac{1}{2}\ln{|\bm \Psi'|} \notag \\
-  &\quad-\frac{1}{2}\mathbb{E}\left[\tau^{-1}_n\right]\Delta'+\frac{1}{2} \ln{\frac{\nu'}{2}} - \ln{\Gamma_L{\left(\frac{\nu'}{2}\right)}} \notag \\
+  &=\sum_{n=1}^{N} \biggl[-\frac{D}{2}\ln{(2\pi)}-\frac{D}{2}\mathbb{E}\left[\ln{\tau_n}\right]-\frac{1}{2}\ln{|\bm \Psi'|} \notag \\
+  &\quad-\frac{1}{2}\mathbb{E}\left[\tau^{-1}_n\right]\Delta'+\frac{1}{2} \ln{\frac{\nu'}{2}} - \ln{\Gamma_D{\left(\frac{\nu'}{2}\right)}} \notag \\
   &\quad- \left(\frac{\nu'}{2}+1\right)\mathbb{E}\left[\ln{\tau_n}\right]+\frac{\nu'}{2}\mathbb{E}\left[\tau^{-1}_n \right] \biggr]
 \end{align}
 ここで，$\mathbb{E}\left[\tau^{-1}_n\right]$と$\mathbb{E}\left[\ln{\tau_n}\right]$は潜在変数$\tau_n$の事後分布$p(\tau_n|\mathbf{x}_n)$を計算することで以下のように求まる．
 \begin{equation}%ディスプレイ用番号付き12
-\mathbb{E}\left[\tau^{-1}_n\right]=\frac{\nu'+L}{\nu'+\Delta'}
+\mathbb{E}\left[\tau^{-1}_n\right]=\frac{\nu'+D}{\nu'+\Delta'}
 \end{equation}
 \begin{eqnarray}%ディスプレイ用番号付き13
-&\mathbb{E}\left[\ln{\tau_n}\right]=-\ln{\mathbb{E}\left[\tau^{-1}_n\right]}+\ln{\left(\frac{\nu+L}{2}\right)}-{\psi}\left(\frac{\nu+L}{2}\right)\quad
+&\mathbb{E}\left[\ln{\tau_n}\right]=-\ln{\mathbb{E}\left[\tau^{-1}_n\right]}+\ln{\left(\frac{\nu+D}{2}\right)}-{\psi}\left(\frac{\nu+D}{2}\right)\quad
 \end{eqnarray}
 ここで，$\psi(\cdot)$は逆ガンマ関数を表す．
 \item[(iii)] Mステップ：$Q(\nu', \bm \Psi')$を最大化することでパラメータを更新する．$Q(\nu', \bm \Psi')$を$\bm \Psi'$で微分しゼロとおくと，新しい尺度行列$\bm \Psi'$は次のように決定される．
@@ -636,7 +637,7 @@ Fig. \ref{fig:system}に，提案する脳波解析手法の概略図を示す�
 提案法では，観測した脳波をバンドパスフィルタの並列によって構成されるフィルタバンクを用いて複数の周波数帯域に分解する．
 そして，各帯域の信号に対して尺度混合モデルに基づく確率的変動の推定を行なう．
 
-まず，$L$対の電極から計測された時刻$t$における脳波を$\mathbf{x}_t \in \mathbb{R}^L$とする．そして，$\mathbf{x}_t$に対して3次のバタワースバンドパスフィルタによって構成されたフィルタバンクを適用することで，信号を$b_n$個の周波数帯域に分解し，得られた信号を$\mathbf{x}^{(b_n)}_t$とする．
+まず，$D$対の電極から計測された時刻$t$における脳波を$\mathbf{x}_t \in \mathbb{R}^D$とする．そして，$\mathbf{x}_t$に対して3次のバタワースバンドパスフィルタによって構成されたフィルタバンクを適用することで，信号を$b_n$個の周波数帯域に分解し，得られた信号を$\mathbf{x}^{(b_n)}_t$とする．
 $\delta$ (1--3 Hz), $\theta$ (4--7 Hz), $\alpha$ (8--12 Hz), $\beta$ (13--24 Hz), $\gamma$ (25--100 Hz) の5つの周波数帯域に分解し，得られた信号を$\mathbf{x}^{(b)}_t$ ($b \in\{\delta, \theta, \alpha,\beta, \gamma\}$)とする．なお，これらの周波数帯域は脳波の特性をとらえるために一般的に用いられているものである~\cite{ep1994}．
 次に，$\mathbf{x}^{(b)}_t$に対して周波数帯域ごとに尺度混合モデルに基づく分散共分散行列分布のパラメータ推定を行ない，確率的変動を特徴付ける$\nu$を取得する．ここで，脳波は時系列に特性が大きく変化する信号であるため，各帯域の信号$\mathbf{x}^{(b)}_t$に対して幅$W$ [s]の移動窓を適用し，窓内のサンプルに対してII--\textit{B}.の手順に基づきパラメータ$\nu$を推定する．この移動窓を$S$ [s]ずつスライドさせながら連続的に推定を行なうことで，時系列に$\nu$の推定結果を取得可能である．ここで，$\nu$は$\infty$に近くなるほど分布がガウス分布に近づく，つまり確率的変動が小さくなることを意味するパラメータである．そこで本論文では，$\nu$の逆数である$1/\nu$を算出し，これを確率的変動を特徴付ける指標として用いる．この$1/\nu$は，値が大きいほど脳波の確率的変動が大きいことを示す．
 
@@ -644,7 +645,7 @@ $\delta$ (1--3 Hz), $\theta$ (4--7 Hz), $\alpha$ (8--12 Hz), $\beta$ (13--24 Hz)
 また，事前に脳波の電極配置を複数の領域に分割しておき，領域ごとに上記の解析を行なうことで，確率的変動の空間分布を取得することも可能である．
 \section{Experiments}
 \subsection{Patients}
-被験者は，専門医によって焦点発作と診断されたてんかん患者20名 (Table \ref{table:conditions}参照)であり，頭皮表面に貼付した電極からサンプリング周波数$f_\mathrm{s} = 500$ Hzで脳波を計測した．電極数は19対 ($L=19$) とし，電極位置は国際10--20法に基づいて決定した (Fig. \ref{fig:electrodes}参照) ．脳波の導出には，耳朶の電極であるA1，A2を基準電極として設定する単極誘導法を用いた．なお，本論文における解析は岡山大学生命倫理委員会の承認のもと実施した (承認番号：研1706-019)．
+被験者は，専門医によって焦点発作と診断されたてんかん患者20名 (Table \ref{table:conditions}参照)であり，頭皮表面に貼付した電極からサンプリング周波数$f_\mathrm{s} = 500$ Hzで脳波を計測した．電極数は19対 ($D=19$) とし，電極位置は国際10--20法に基づいて決定した (Fig. \ref{fig:electrodes}参照) ．脳波の導出には，耳朶の電極であるA1，A2を基準電極として設定する単極誘導法を用いた．なお，本論文における解析は岡山大学生命倫理委員会の承認のもと実施した (承認番号：研1706-019)．
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -702,22 +703,25 @@ $\delta$ (1--3 Hz), $\theta$ (4--7 Hz), $\alpha$ (8--12 Hz), $\beta$ (13--24 Hz)
 \begin{eqnarray}%ディスプレイ用番号付き12
 	\mathrm{Percentage\;error} = \begin{cases}
     \displaystyle  \frac{|\nu-\hat{\nu}|}{|\nu|}\times100 & (L=1)\\
-    \displaystyle \frac{\|\mathbf{\Psi}-\hat{\mathbf{\Psi}}\|}{\|\mathbf{\Psi}\|}\times100 & (L>1)
+    \displaystyle \frac{\|\mathbf{\Psi}-\hat{\mathbf{\Psi}}\|_F}{\|\mathbf{\Psi}\|_F}\times100 & (L>1)
 \end{cases}
 \end{eqnarray}
-各パラメータの推定は，サンプル数$N$を$N$ = \{500, 1000, 500, 5000, 10000, 15000, 25000, 5000\}と変更させて行なった．百分率誤差の平均は多変量t分布の二つのパラメータ自由度$\nu$と尺度行列$\mathbf{\Psi}$ (共分散成分は0.5とし，対角成分のみ変更)の真値を400回変更することで求めた ($\nu=0.5,1.0,1.5,\cdots,10.0, \psi_{ii} =1.0, 2.0, 3.0,\cdots, 20.0$).
+ここで，$\|A\|_F=\sqrt{\sum_{i=1}^L \sum_{j=1}^L {|a_{ij}}|^2}$（フロベニウスノルム~引用）である．
+
+各パラメータの推定は，サンプリング周波数を$f_s=500$ Hzと設定し，窓幅$W$を$W$ = \{1, 2, 5, 10, 15, 20, 30, 50, 100 s\}，次元数$D$を$D$ = \{1, 2, 4, 8, 16, 19\}と変更させて行なった．百分率誤差の平均は多変量t分布の二つのパラメータ自由度$\nu'$と尺度行列$\mathbf{\Psi}'$ (共分散成分は0.5とし，対角成分のみ変更)の真値を400回変更することで求めた ($\nu=0.5,1.0,1.5,\cdots,10.0, \psi_{ii} =1.0, 2.0, 3.0,\cdots, 20.0$).
 
 \subsection{Experiment II (Epileptic EEG analysis)}
 提案法に基づく脳波の確率的変動評価の有効性を検証するため，てんかん発作時の脳波に対して解析を行なった．
 
 提案法に基づく解析には，計測したデータから切り出した発作前後の一定時間のデータを使用した．
 各被験者の情報，解析に用いた時間，および発作持続時間を Table \ref{table:conditions}に示す．
-まず，本モデルが脳波のモデルとして従来のモデルよりも適しているのかを確認するために，全被験者に対してデータの外れ値が少ない多変量ガウスモデル，分布の裾が重い特徴をもつ多変量コーシーモデルと比較を行なった．評価指標としては，モデルの適合度と複雑さのバランスをとるBIC (Bayesian information criterion)を用いた．
+
+まず，本モデルが脳波のモデルとして従来のモデルより適合しているかを確認するために，全被験者の計測時間すべてのデータに対してデータの外れ値が少ない多変量ガウスモデル，分布の裾が重い特徴をもつ多変量コーシーモデルと比較を行なった．データには，$\gamma$帯域のバンドパスフィルタ処理を施している．評価指標としては，モデルの適合度と複雑さのバランスをとるBIC (Bayesian information criterion)を用いた．
 
 \begin{eqnarray}%ディスプレイ用番号付き12
 	\mathrm{BIC} = -2 \mathrm{ln}L(\hat{\theta}) + p \mathrm{ln}(N_W)
 \end{eqnarray}
-ここで，$\mathrm{ln}L(\hat{\theta})$はモデルの尤度，$p$はモデルで推定されるパラメータ数，$N_W$は移動窓内のサンプル数である．
+ここで，$\mathrm{ln}L(\hat{\theta})$はモデルの尤度，$p$はモデルで推定されるパラメータ数，$N_W$は移動窓内のサンプル数である．窓幅$W$は$W = 1, 5, 10, 15$ sとし，ずらし幅$S$は$S = 1$ sで連続的に算出した．
 
 提案法により算出した各帯域の$1/\nu$を用いて，てんかん発作／非発作の分類性能を評価した．まず，各被験者における$1/\nu$の算出結果を，発作区間から得られたものと非発作区間から得られたものに分割した．ここで，非発作区間は解析開始から発作が生じるまでと定義しており，元の脳波において体動や電極シフトなどによるノイズの影響が顕著に見られた区間は対象から除外した．また，発作区間と非発作区間で$1/\nu$のサンプル数が大きく異なるため，発作区間のサンプル数を基準として非発作区間から抽出し，被験者ごとに$1/\nu$のサンプル数を揃えた．
 
@@ -729,25 +733,47 @@ $\delta$ (1--3 Hz), $\theta$ (4--7 Hz), $\alpha$ (8--12 Hz), $\beta$ (13--24 Hz)
 
 \section{Results}
 \subsection{Experiment I (Estimate parameter)}
-Fig. に，生成した脳波の一例を示す．
-Fig. \ref{fig:ES_param}に，サンプル数ごとに推定した$\nu$と$\mathbf{\Psi}$の百分率誤差の平均を示す．
+Fig. \ref{fig:sim_EEG} に，人工生成した波形のパラメータ$\nu$を\{2.5, 5.0, 10.0\}, $\psi_{ii}$を\{1.0, 10.0, 20.0\}に変更させた場合の例を示す．縦軸は生成した信号の振幅を示し，横軸は時間を示す．
+Fig. \ref{fig:ES_param}に，窓幅と次元数を変更し，推定した$\nu$と$\mathbf{\Psi}$の百分率誤差の平均を示す．
 
 \subsection{Experiment II (Epileptic EEG analysis)}
+Table \ref{table:BIC}に，各窓幅で，BICが最小となった回数を割合で示す．
 Fig. \ref{fig:Colormap}に，Sub. A, Sub. Bにおける脳波の生波形と対応する$1/\nu$の算出結果をカラーマップにより示す．
 本カラーマップにおいて，$1/\nu$は全帯域の最大値が1となるように正規化している．
 なお，波形中の陰影部およびカラーマップ中の白点線で示している箇所は，専門医がてんかん発作と診断した区間である．
 
-Fig. \ref{fig:dens}に，カーネル密度推定~\cite{Parzen1962}により算出した全被験者に対する各帯域の$1/\nu$の分布を，発作区間と非発作区間のそれぞれについて示す．
-図中にはBonferroni-Holm調整を用いた対応ありWilcoxon符号付き順位検定 (有意水準：1\%)の結果と効果量$g$~\cite{Hedges1981}を併記している．
-ここで，効果量$g$とは2つの分布の平均値の差の大きさを表す統計的指標であり，一般的に$0.2 \leq g < 0.5$は小さな効果量，$0.5 \leq g < 0.8$は中程度の効果量，$0.8 \leq g$は大きな効果量と解釈される．
+%Fig. \ref{fig:dens}に，カーネル密度推定~\cite{Parzen1962}により算出した全被験者に対する各帯域の$1/\nu$の分布を，発作区間と非発作区間のそれぞれについて示す．
+%図中にはBonferroni-Holm調整を用いた対応ありWilcoxon符号付き順位検定 (有意水準：1\%)の結果と効果量$g$~\cite{Hedges1981}を併記している．
+%ここで，効果量$g$とは2つの分布の平均値の差の大きさを表す統計的指標であり，一般的に$0.2 \leq g < 0.5$は小さな効果量，$0.5 \leq g < 0.8$は中程度の効果量，$0.8 \leq g$は大きな効果量と解釈される．
 Fig. \ref{fig:roc}(a)に，発作／非発作の分類によって得られたROC曲線を，各帯域における$1/\nu$と振幅情報であるRMSのそれぞれについて示す．またこのROC曲線から得られたAUCをFig. \ref{fig:roc}(b)に示す．各帯域 ($\delta$--$\gamma$)における$1/\nu$のAUCはそれぞれ, 0.657, 0.597, 0.605, 0.757, 0.868となり，RMSのAUCは0.847となった．
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{figure}[!t]
+\centering
+\includegraphics[width=0.9\hsize]{figure/simulation_EEG.eps}
+%\end{center}
+\caption{Examples of artificially generalized EEG signals with $\nu$ set to (a) $\nu = 2.5$, (b) $\nu = 5.0$, and (c) $\nu = 10.0$; in each case, ${\psi_{ii}}$ was set to ${\psi_{ii}} = 1.0$, ${\psi_{ii}} = 10.0$, and ${\psi_{ii}} = 20.0$.}
+\label{fig:sim_EEG}
+\end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{figure}[!t]
+\centering
+\includegraphics[width=0.9\hsize]{figure/AAPE_color_dim_fro.eps}
+%\end{center}
+\caption{Average absolute percentage errors for each sample size in the estimation of $\nu$, $\mathbf{\Psi}$.}
+\label{fig:ES_param}
+\end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 %=====================
 %Table1　被験者
 %=====================
 \begin{table}[t]
  \begin{center}
- \caption[Subject conditions]{Percentage of the times each model was selected for different window widths.}
- \label{table:conditions}
+ \caption[Subject conditions]{Percentage of the times each model\\
+ was selected for different window widths.}
+ \label{table:BIC}
  \vspace{-2.5mm}
 % \scalebox{0.86}[0.86]{%size
   \begin{tabular}{cccc}
@@ -757,38 +783,41 @@ Fig. \ref{fig:roc}(a)に，発作／非発作の分類によって得られたRO
    \midrule %booktabs
    1 & 51.57 \%  & 48.32 \%  & 0.11 \% \\ %5726
    5 & 95.01 \%  & 4.87 \%  & 0.12 \%  \\ %6074
-   10 & 99.02 \%  & 0.56 \%  & 0.42 \%  \\ %5888
+   10 & 99.06 \%  & 0.57 \%  & 0.37 \%  \\ %5979
    15 & 99.48 \%  & 0.21 \%  & 0.31 \%  \\ %6170
+   %1 & 58.24 \%  & 41.72 \%  & 0.04 \% & 51.57 \%  & 48.32 \%  & 0.11 \% \\ %5726
+   %5 & 97.04 \%  & 2.90 \%  & 0.06 \%  & 95.01 \%  & 4.87 \%  & 0.12 \%  \\ %6074
+   %10 & 99.52 \%  & 0.35 \%  & 0.13 \% & 99.06 \%  & 0.57 \%  & 0.37 \% \\ %5979
+   %15 & 99.82 \%  & 0.08 \%  & 0.10 \% & 99.48 \%  & 0.21 \%  & 0.31 \% \\ %6170
    \bottomrule %booktabs
   \end{tabular}
  \end{center}
 \end{table}
 
 %=====================
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{figure}[!t]
-\centering
-\includegraphics[width=0.9\hsize]{figure/AAPE_color_dim.eps}
-%\end{center}
-\caption{Average absolute percentage errors for each sample size in the estimation of $\nu$, $\mathbf{\Psi}$.}
-\label{fig:ES_param}
-\end{figure}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{figure}[!t]
+\begin{figure}[!t]　%17名
 \centering
 \includegraphics[width=0.9\hsize]{figure/Colormap.eps}
 %\end{center}
-\caption{Analysis results of the proposed method for (a)Sub. A and (b)Sub. B.}
+\caption{Analysis results of the proposed method for (a) Sub. A and (b) Sub. B.}
 \label{fig:Colormap}
 \end{figure}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{figure}[!t]
+\begin{figure}[!t]　%17名
+\centering
+\includegraphics[width=0.9\hsize]{figure/dens_test.eps}
+%\end{center}
+\caption{Experimental distributions of $1/\nu$ estimated from EEG signals. The p value from the Wilcoxon signed rank test and the effect size g are also shown. }
+\label{fig:dens}
+\end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{figure}[!t] %17名
 \centering
 \includegraphics[width=0.9\hsize]{figure/ROC_rms.eps}
 %\end{center}
@@ -798,25 +827,37 @@ Fig. \ref{fig:roc}(a)に，発作／非発作の分類によって得られたRO
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{figure}[!t]
-\centering
-\includegraphics[width=0.95\hsize]{figure/window_w50.eps}
+%\begin{figure}[!t]
+%\centering
+%\includegraphics[width=0.95\hsize]{figure/window_w50.eps}
 %\end{center}
-\caption{Results of AUCs for each frequency band by changing window length. }
-\label{fig:window}
-\end{figure}
+%\caption{Results of AUCs for each frequency band by changing window length. }
+%\label{fig:window}
+%\end{figure}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Discussion}
 %-------------------
 %考察
 %-------------------
+シミュレーション実験において，
+Fig. \ref{fig:sim_EEG}より，$\nu$の値が$\nu = 2.5$から$\nu = 10.0$に変更するにつれて波形の外れ値は現れなくなり，定常的な波になっていることがわかる．これは，$\nu$が分布のガウス性を決定するパラメータであることから値が大きくなるにつれて分布がガウス分布に近づくことを表している．
+また，$\psi_{ii}$の値においては大きくなるにつれて，生成データの振幅が大きくなっていることがわかる．$\psi_{ii}$は，分散の分布のばらつきを評価するパラメータであることから\cite{furui2019scale}，
+多次元の場合においても，このような結果が得られたと考えられる．
+
+Fig. \ref{fig:ES_param}より，窓幅を変更させた場合，どちらのパラメータにおいても百分率誤差が減少していることがわかる．
+また，次元数を変更させた場合，$\nu$においては，次元数を大きくさせることで百分率誤差が減少しており，$\mathbf{\Psi}$においては，一度減少し，再び増加するという傾向が確認された．$\nu$は一次元のパラメータであり，推定においては，次元数を大きくすることで，サンプル数が増加することと等価とみなすことができ，百分率誤差が減少したと考えられる．$\mathbf{\Psi}$に関しては，$\mathbf{\Psi} = \nu' \mathbf{\Psi}'$より，$\nu'$の推定精度の影響を受けるため，小さい次元数の場合，$\nu'$の百分率誤差が大きいため，相乗的に値が大きくなっていると考えられる．また，大きい次元数の場合，百分率誤差が大きくなっているのは，次元数が大きくなるほど，行列の要素数が増加し，要素ごとの推定精度は変化せずとも，全体としての百分率誤差は大きくなるためであると考えられる．
+このことから，窓幅を大きくすることで，$\nu$，$\mathbf{\Psi}$はより正確に推定を行なえ，次元数を大きくすることで$\nu$はより正確に，反対に$\mathbf{\Psi}$の推定精度は現象することがわかった．また，これらの結果より，19次元において，窓幅が5 s以上であれば，少なくとも10\%以下の誤差で推定が行なえることを示している．
+
+脳波解析実験において，
+Table \ref{table:BIC}より，各窓幅において，提案モデルが最もBICが最小となる回数が多いことがわかる．しかし，窓幅$W=1$ sの場合，提案モデルとガウスモデルの差がわずか3.25\%であることが確認された．これは窓幅が小さい場合，パラメータの推定誤差が大きくなり，尤度が小さくなること，また提案モデルのパラメータ数がガウスモデルよりも多いことから複雑でないガウスモデルがより適したモデルであると判定されたと考えられる．ただし，窓幅が 5 s以上であれば，BICが最小となる回数が95\%以上であることを示しており，提案モデルが従来モデルよりも脳波に適したモデルであることがわかる．これは，提案モデルのパラメータ$\nu$を変更させることで，外れ値が少ないガウスモデルと裾の重い分布となるコーシーモデル両方に適応できるためであると考えられる．
+
 Fig. \ref{fig:Colormap}より，てんかん発作区間において特に高周波帯域の$1/\nu$が大きくなっていることがわかる．
 この傾向は，全ての被験者に共通して確認することができた．このことから，提案法を用いることで，てんかん発作に伴う脳波の非ガウス性の変化を確率的変動として定量的に評価できていると考えられる．
 
 Fig. \ref{fig:dens}より，全被験者の各帯域における$1/\nu$の分布を確認すると，非発作時の$1/\nu$は帯域によらず0.25未満の領域に分布していることがわかる．一方，発作時の$1/\nu$は非発作時よりも広く分布しており，その傾向は高周波になるにつれ強くなっていることがわかる．これは平均値の差の程度を表す効果量$g$の結果からも確認できる．$\beta$や$\gamma$帯域において大きな効果量が得られたことから，高周波帯域における$1/\nu$がてんかん発作時の特徴を最も反映していると考えられる．これは，てんかん発作に伴い脳波の高周波帯域が強い非ガウス性を示したことを意味している．てんかん発作時に脳波の高周波帯域である$\gamma$帯域の活動が活発になることは従来研究においても報告されている~\cite{Kobayashi2004,Kobayashi2009,Benedek2016}．その詳しいメカニズムはいまだ明らかにされていないものの，皮質と皮質下構造の間の複雑な相互作用に起因すると考えられている~\cite{Kobayashi2004}．この相互作用の異常によっててんかん発作時特有の断続的な振幅変化が生じ，結果として高周波帯域の非ガウス性が強調され$1/\nu$が増加した可能性がある．
 
-Fig. \ref{fig:roc}(b)より，各帯域における$1/\nu$のAUCを確認したところ，高周波帯域である$\gamma$帯域で0.868と中程度ながら高い値が得られており，$\gamma$帯域の$1/\nu$が最も分類性能が高いことがわかる．また，従来の特徴量であるRMSと比較したところ，$\gamma$帯域の$1/\nu$は従来法と同程度以上の識別性能を有することが示された．振幅の絶対的な大きさであるRMSと，提案法から算出される$1/\nu$は脳波活動の異なる側面を捉えていると考えられるため，今後はこれらを組み合わせることでより高い識別性能を獲得できる可能性がある．
+Fig. \ref{fig:roc}(b)より，各帯域における$1/\nu$のAUCを確認したところ，高周波帯域である$\gamma$帯域で0.868と中程度ながら高い値が得られており，$\gamma$帯域の$1/\nu$が最も分類性能が高いことがわかる．また，従来の特徴量であるRMSと比較したところ，$\gamma$帯域の$1/\nu$は従来法と同程度以上の識別性能を有することが示された．振幅の絶対的な大きさであるRMSや振幅の情報をもつと考えられる$\mathbf{\Psi}$と，提案法から算出される$1/\nu$は脳波活動の異なる側面を捉えていると考えられるため，今後はこれらを組み合わせることでより高い識別性能を獲得できる可能性がある．
 
 \section{Conclusion}
 以上より，提案法を用いて，てんかん発作に伴う脳波の確率的変動を定量的に評価することができ，この特徴変化を用いることでてんかん発作検出へと応用できる可能性が示された．
@@ -829,15 +870,15 @@ Fig. \ref{fig:roc}(b)より，各帯域における$1/\nu$のAUCを確認した�
 \begin{eqnarray}
 	&p(\mathbf{x}_n) \nonumber\\ &=& \int \mathrm{IG}(\tau_n;\nu'/2,\nu'/2) \mathcal{N}(\mathbf{x}_n|\tau_n \mathbf{\Psi}') \mathrm{d}{\tau_n} \nonumber\\
 	&=& \int \frac{\left(\frac{\nu'}{2}\right)^{\frac{\nu'}{2}}}{\Gamma \left(\frac{\nu'}{2}\right)} (\tau_n)^{-\frac{\nu'}{2}-1} \mathrm{exp} \left[-\frac{1}{\tau_n} \left(\frac{\nu'}{2} \right) \right] \nonumber\\
-	&\quad\times&\frac{1}{(2\pi)^{\frac{L}{2}}(\tau_n)^{\frac{L}{2}}|\mathbf{\Psi'}|^{\frac{1}{2}}} \mathrm{exp} \left[-\frac{1}{2}\mathbf{x}^\mathrm{T} (\tau_n\mathbf{\Psi'})^{-1} \mathbf{x}\right] \mathrm{d}{\tau_n} \nonumber\\
-	&=&\frac{1}{(2\pi)^{\frac{L}{2}}}\frac{\left(\frac{\nu'}{2}\right)^{\frac{\nu'}{2}}}{\Gamma \left(\frac{\nu'}{2}\right)}\frac{1}{|\mathbf{\Psi'}|^{\frac{1}{2}}} \nonumber\\
-	&\quad\times& \int (\tau_n)^{-\frac{\nu'+L}{2}-1} \mathrm{exp} \left[-\frac{1}{\tau_n} \left(\frac{\nu' + \Delta'}{2}\right) \right] \mathrm{d}{\tau_n} \nonumber\\
-	&=&\frac{1}{(2\pi)^{\frac{L}{2}}}\frac{\left(\frac{\nu'}{2}\right)^{\frac{\nu'}{2}}}{\Gamma \left(\frac{\nu'}{2}\right)}\frac{1}{|\mathbf{\Psi'}|^{\frac{1}{2}}} \frac{\Gamma \left(\frac{\nu'+L}{2}\right)}{\left(\frac{\nu'+\Delta'}{2}\right)^{\frac{\nu'+L}{2}}}\nonumber\\
-	&\quad\times& \int \frac{\left(\frac{\nu'+\Delta'}{2}\right)^{\frac{\nu'+L}{2}}}{\Gamma \left(\frac{\nu'+L}{2}\right)} (\tau_n)^{-\frac{\nu'+L}{2}-1} \nonumber\\
+	&\quad\times&\frac{1}{(2\pi)^{\frac{D}{2}}(\tau_n)^{\frac{D}{2}}|\mathbf{\Psi'}|^{\frac{1}{2}}} \mathrm{exp} \left[-\frac{1}{2}\mathbf{x}^\mathrm{T} (\tau_n\mathbf{\Psi'})^{-1} \mathbf{x}\right] \mathrm{d}{\tau_n} \nonumber\\
+	&=&\frac{1}{(2\pi)^{\frac{D}{2}}}\frac{\left(\frac{\nu'}{2}\right)^{\frac{\nu'}{2}}}{\Gamma \left(\frac{\nu'}{2}\right)}\frac{1}{|\mathbf{\Psi'}|^{\frac{1}{2}}} \nonumber\\
+	&\quad\times& \int (\tau_n)^{-\frac{\nu'+D}{2}-1} \mathrm{exp} \left[-\frac{1}{\tau_n} \left(\frac{\nu' + \Delta'}{2}\right) \right] \mathrm{d}{\tau_n} \nonumber\\
+	&=&\frac{1}{(2\pi)^{\frac{D}{2}}}\frac{\left(\frac{\nu'}{2}\right)^{\frac{\nu'}{2}}}{\Gamma \left(\frac{\nu'}{2}\right)}\frac{1}{|\mathbf{\Psi'}|^{\frac{1}{2}}} \frac{\Gamma \left(\frac{\nu'+D}{2}\right)}{\left(\frac{\nu'+\Delta'}{2}\right)^{\frac{\nu'+D}{2}}}\nonumber\\
+	&\quad\times& \int \frac{\left(\frac{\nu'+\Delta'}{2}\right)^{\frac{\nu'+D}{2}}}{\Gamma \left(\frac{\nu'+D}{2}\right)} (\tau_n)^{-\frac{\nu'+D}{2}-1} \nonumber\\
 	&\quad\times& \mathrm{exp} \left[-\frac{1}{\tau_n} \left(\frac{\nu' + \Delta'}{2}\right) \right] \mathrm{d}{\tau_n} \nonumber\\
-	&=&\frac{1}{(2\pi)^{\frac{L}{2}}}\frac{\left(\frac{\nu'}{2}\right)^{\frac{\nu'}{2}}}{\Gamma \left(\frac{\nu'}{2}\right)}\frac{1}{|\mathbf{\Psi'}|^{\frac{1}{2}}} \frac{\Gamma \left(\frac{\nu'+L}{2}\right)}{\left(\frac{\nu'+\Delta'}{2}\right)^{\frac{\nu'+L}{2}}}\nonumber\\
-	&\quad\times& \int \mathrm{IG}(\tau_n;\frac{\nu'+L}{2},\frac{\nu'+\Delta'}{2}) \mathrm{d}{\tau_n}\nonumber\\
-	&=& \frac{\Gamma(\frac{\nu'+L}{2})}{\Gamma(\frac{\nu'}{2})} \frac{|{\bm \Psi'}|^{-\frac{1}{2}}}{\left(\pi \nu' \right)^{\frac{L}{2}}} \left(1+\frac{\Delta '}{\nu '} \right)^{-\frac{\nu'+L}{2}}.
+	&=&\frac{1}{(2\pi)^{\frac{D}{2}}}\frac{\left(\frac{\nu'}{2}\right)^{\frac{\nu'}{2}}}{\Gamma \left(\frac{\nu'}{2}\right)}\frac{1}{|\mathbf{\Psi'}|^{\frac{1}{2}}} \frac{\Gamma \left(\frac{\nu'+D}{2}\right)}{\left(\frac{\nu'+\Delta'}{2}\right)^{\frac{\nu'+D}{2}}}\nonumber\\
+	&\quad\times& \int \mathrm{IG}(\tau_n;\frac{\nu'+D}{2},\frac{\nu'+\Delta'}{2}) \mathrm{d}{\tau_n}\nonumber\\
+	&=& \frac{\Gamma(\frac{\nu'+D}{2})}{\Gamma(\frac{\nu'}{2})} \frac{|{\bm \Psi'}|^{-\frac{1}{2}}}{\left(\pi \nu' \right)^{\frac{D}{2}}} \left(1+\frac{\Delta '}{\nu '} \right)^{-\frac{\nu'+D}{2}}.
 \end{eqnarray}
 
 % if have a single appendix:
