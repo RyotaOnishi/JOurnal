@@ -1,0 +1,101 @@
+\relax 
+\citation{WHO}
+\citation{Kandel2000}
+\citation{Deburchgraeve2008,Subasi2005,kellaway1979precise,Panzica1999,fusco1993ictal,Acir2005,Greene2008}
+\citation{Deburchgraeve2008}
+\citation{Subasi2005}
+\citation{Sounders1963,Gonen2012,Campbell1967,Weiss1973,Nurujjaman2009,Charles1999}
+\citation{Sounders1963,Gonen2012}
+\citation{Campbell1967}
+\citation{Gonen2012,Weiss1973,Nurujjaman2009,Charles1999}
+\citation{Nurujjaman2009,Charles1999}
+\@writefile{toc}{\contentsline {section}{\numberline {I}Introduction}{1}}
+\citation{t2006}
+\citation{Models1998}
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Graphical representation of the stochastic relationship between EEG signals and its variance-covariance matrix. The white nodes are random variables and the black nodes are parameters to be estimated. In the model, EEG signals $\mathbf  {x} \in \mathbb  {R}^{D}$ are handled as a random variable that follows a multivariate Gaussian distribution with a mean vector of $\mathbf  {0}$. The EEG variance-covariance matrix $\mathbf  {\Sigma } \in \mathbb  {R}^{D \times D}$ is also a random variable that follows the inverse Wishart distribution determined by the degrees of freedom parameter $\nu \in \mathbb  {R}^+$ and the scale matrix $\mathbf  {\Psi } \in \mathbb  {R}^{D \times D}$. The parameter $\nu $ represents stochastic fluctuations of EEG signals. The variance-covariance matrix distribution parameters are estimated via marginal likelihood maximization from recorded EEG signals.}}{2}}
+\newlabel{fig:model}{{1}{2}}
+\@writefile{toc}{\contentsline {section}{\numberline {II}Methods}{2}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {II-A}}Multivariate Scale Mixture Model of Surface EEG Signals}{2}}
+\newlabel{eq:gauss_x}{{1}{2}}
+\newlabel{eq:p_sigma}{{2}{2}}
+\newlabel{eq:marginal_x}{{3}{2}}
+\newlabel{eq:p_x}{{4}{2}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {II-B}}Parameter Estimation Based on Marginal Maximum Likelihood}{2}}
+\citation{t2006}
+\citation{GeneHowardGolub2013}
+\newlabel{eq:eq6}{{6}{3}}
+\newlabel{eq:eq7}{{7}{3}}
+\newlabel{eq:eq8}{{8}{3}}
+\newlabel{eq:eq9}{{9}{3}}
+\newlabel{eq:eq11}{{11}{3}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {II-C}}Proposed EEG Analysis Methods}{3}}
+\citation{ep1994}
+\citation{Schwarz1978}
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Overview of the proposed analysis method. The recorded EEG signals are decomposed into $b_1$--$b_m$ frequency band by using filterbank consisting of parallel band pass filters, then the parameter is estimated based on the proposed model and show the results by using color map.}}{4}}
+\newlabel{fig:system}{{2}{4}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces International 10--20 electrode montage}}{4}}
+\newlabel{fig:electrodes}{{3}{4}}
+\@writefile{toc}{\contentsline {section}{\numberline {III}Experiments}{4}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {III-A}}Simulation}{4}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {III-B}}Epileptic EEG analysis}{4}}
+\citation{Hamedi2014}
+\@writefile{lot}{\contentsline {table}{\numberline {I}{\ignorespaces Subject conditions}}{5}}
+\newlabel{table:conditions}{{I}{5}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Examples of artificially generalized EEG signals ($D$ = 4) with $\nu _0$ set to (a) $\nu _0 = 5.0$, (b) $\nu _0 = 8.0$, and (c) $\nu _0 = 13.0$; in each case, ${{\psi _0}_{ii}}$ was set to ${{\psi _0}_{ii}} = 10.0$, ${{\psi _0}_{ii}} = 20.0$, and ${{\psi _0}_{ii}} = 40.0$.}}{5}}
+\newlabel{fig:sim_EEG}{{4}{5}}
+\@writefile{lot}{\contentsline {table}{\numberline {II}{\ignorespaces Subject conditions}}{5}}
+\newlabel{table:BIC}{{II}{5}}
+\@writefile{toc}{\contentsline {section}{\numberline {IV}Results}{5}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {IV-A}}Simulation}{5}}
+\citation{Parzen1962}
+\citation{Hedges1981}
+\citation{Cohen2013}
+\citation{Delong1988}
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces Average absolute percentage errors for each combination of the number of input dimensions $D$ and the length of the sliding window $W$ in the estimation of variance-covariance distribution parameters. (a) $\nu $. (b) $\mathbf  {\Psi }$.}}{6}}
+\newlabel{fig:ES_param}{{5}{6}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {IV-B}}Epileptic EEG analysis}{6}}
+\@writefile{toc}{\contentsline {section}{\numberline {V}Discussion}{6}}
+\citation{Kobayashi2004,Kobayashi2009,Benedek2016}
+\citation{Kobayashi2004}
+\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces Raw EEG signals and corresponding analysis results of the proposed method for (a) Sub. A and (b) Sub. B. Proposed index $1/\nu $ was normalized based on min--max normalization, rescaling the range of features to scale the range in [0, 1]. }}{7}}
+\newlabel{fig:Colormap}{{6}{7}}
+\@writefile{toc}{\contentsline {section}{\numberline {VI}Conclusion}{7}}
+\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces Experimental distributions of $1/\nu $ estimated from EEG signals. The \textit  {p} value from paired $t$-test and the effect size \textit  {g} are also shown. }}{8}}
+\newlabel{fig:dens}{{7}{8}}
+\@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces Results of $1/\nu $ for each frequency band and RMS. (a) ROC curves. (b) AUCs. The pairwise comparisons between RMS and the others result based on the Delong's test for two correlated ROC curves with Holm adjustment are also shown (***: $p<0.001$).}}{8}}
+\newlabel{fig:roc}{{8}{8}}
+\@writefile{toc}{\contentsline {section}{Appendix: Equivalent calculation on multivariate SMM}{8}}
+\newlabel{eq:20}{{20}{8}}
+\bibstyle{IEEEtran}
+\bibdata{ref.bib}
+\bibcite{WHO}{1}
+\bibcite{Kandel2000}{2}
+\bibcite{Deburchgraeve2008}{3}
+\bibcite{Subasi2005}{4}
+\bibcite{kellaway1979precise}{5}
+\bibcite{Panzica1999}{6}
+\bibcite{fusco1993ictal}{7}
+\bibcite{Acir2005}{8}
+\bibcite{Greene2008}{9}
+\bibcite{Sounders1963}{10}
+\bibcite{Gonen2012}{11}
+\bibcite{Campbell1967}{12}
+\bibcite{Weiss1973}{13}
+\bibcite{Nurujjaman2009}{14}
+\bibcite{Charles1999}{15}
+\bibcite{t2006}{16}
+\bibcite{Models1998}{17}
+\bibcite{GeneHowardGolub2013}{18}
+\bibcite{ep1994}{19}
+\bibcite{Schwarz1978}{20}
+\bibcite{Hamedi2014}{21}
+\bibcite{Parzen1962}{22}
+\bibcite{Hedges1981}{23}
+\bibcite{Cohen2013}{24}
+\bibcite{Delong1988}{25}
+\bibcite{Kobayashi2004}{26}
+\bibcite{Kobayashi2009}{27}
+\bibcite{Benedek2016}{28}
+\newlabel{eq:21}{{21}{9}}
+\newlabel{eq:22}{{22}{9}}
+\@writefile{toc}{\contentsline {section}{References}{9}}
